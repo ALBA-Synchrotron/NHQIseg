@@ -4,4 +4,4 @@ from .controller import NHQPowerSupply
 
 # The version is updated automatically with bumpversion
 # Do not update manually
-version = '0.0.0'
+version = '0.1.0'
