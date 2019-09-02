@@ -25,7 +25,7 @@ if SPHINX:
     setup_requirements += ['sphinx', 'sphinx-argparse', 'sphinx_rtd_theme']
 
 extra_requirements = {
-    'tango': ['tango']
+    'tango': ['pytango']
 }
 setup(
     name="nhq_iseg",
@@ -60,6 +60,6 @@ setup(
     install_requires=['pyserial'],
     setup_requires=setup_requirements,
     tests_require=test_requirements,
-    extra_require=extra_requirements,
+    extras_require={"tango": ['pytango']},
     python_requires='>=3.5',
 )
