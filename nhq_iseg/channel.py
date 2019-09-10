@@ -107,7 +107,7 @@ class NHQChannel:
         :return:
         """
         raw_value = self.read_cmd('V')
-        return  int(raw_value)
+        return int(raw_value)
 
     @ramp_speed.setter
     def ramp_speed(self, value):

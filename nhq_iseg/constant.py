@@ -109,6 +109,7 @@ class Specs:
             return True
         else:
             return False
+
     @staticmethod
     def channels(model):
         return Specs._specs[model][3]

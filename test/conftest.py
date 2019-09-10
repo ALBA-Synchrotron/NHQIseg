@@ -3,7 +3,8 @@ import unittest.mock as mock
 import nhq_iseg
 import serial
 
-from patch_serial import patch_serial, PatchSerial
+from patch_serial import PatchSerial
+
 
 @pytest.fixture
 def nhq_mock():
