@@ -19,5 +19,5 @@ def test_controller(nhq_controller):
     assert channel.auto_start is False
     assert channel.state == State.ON
     assert channel.current_trip == 0
-    assert channel.voltage_limit == 60
-    assert channel.current_limit == 100
+    assert channel.voltage_limit == 1200
+    assert channel.current_limit == 0.006
