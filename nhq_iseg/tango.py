@@ -71,23 +71,23 @@ class NHQIseg(Device):
         else:
             return self.get_state() != DevState.FAULT
 
-    @attribute(label="CurrentB", unit="A", dtype=float)
+    @attribute(name="CurrentA", unit="A", dtype=float)
     def current_a(self):
         return self.read_attribute('current', 1)
 
-    @attribute(label="CurrentB", unit="A", dtype=float)
+    @attribute(name="CurrentB", unit="A", dtype=float)
     def current_b(self):
         return self.read_attribute('current', 2)
 
-    @attribute(label="VoltageA", unit="V", dtype=float)
+    @attribute(name="VoltageA", unit="V", dtype=float)
     def voltage_a(self):
         return self.read_attribute('voltage', 1)
 
-    @attribute(label="VoltageB", unit="V", dtype=float)
+    @attribute(name="VoltageB", unit="V", dtype=float)
     def voltage_b(self):
         return self.read_attribute('voltage', 2)
 
-    @attribute(label="SetVoltageA", unit="V", dtype=float,
+    @attribute(name="SetVoltageA", unit="V", dtype=float,
                fisallowed='is_write_allow')
     def set_voltage_a(self):
         return self.read_attribute('set_voltage', 1)
@@ -96,7 +96,7 @@ class NHQIseg(Device):
     def set_voltage_a(self, value):
         return self.write_attribute('set_voltage', 1, value)
 
-    @attribute(label="SetVoltageB", unit="V", dtype=float,
+    @attribute(name="SetVoltageB", unit="V", dtype=float,
                fisallowed='is_write_allow')
     def set_voltage_b(self):
         return self.read_attribute('set_voltage', 2)
@@ -105,7 +105,7 @@ class NHQIseg(Device):
     def set_voltage_b(self, value):
         return self.write_attribute('set_voltage', 2, value)
 
-    @attribute(label="RampSpeedA", unit="V/s", dtype=int, min_value=2,
+    @attribute(name="RampSpeedA", unit="V/s", dtype=int, min_value=2,
                max_value=255, fisallowed='is_write_allow')
     def ramp_speed_a(self):
         return self.read_attribute('ramp_speed', 1)
@@ -114,7 +114,7 @@ class NHQIseg(Device):
     def ramp_speed_a(self, value):
         return self.write_attribute('ramp_speed', 1, value)
 
-    @attribute(label="RampSpeedB", unit="V/s", dtype=int, min_value=2,
+    @attribute(name="RampSpeedB", unit="V/s", dtype=int, min_value=2,
                max_value=255, fisallowed='is_write_allow')
     def ramp_speed_b(self):
         return self.read_attribute('ramp_speed', 2)
@@ -123,19 +123,19 @@ class NHQIseg(Device):
     def ramp_speed_b(self, value):
         return self.write_attribute('ramp_speed', 2, value)
 
-    @attribute(label="VoltageLimitA", unit="V", dtype=float)
+    @attribute(name="VoltageLimitA", unit="V", dtype=float)
     def voltage_limit_a(self):
         return self.read_attribute('voltage_limit', 1)
 
-    @attribute(label="VoltageLimitB", unit="V", dtype=float)
+    @attribute(name="VoltageLimitB", unit="V", dtype=float)
     def voltage_limit_b(self):
         return self.read_attribute('voltage_limit', 2)
 
-    @attribute(label="CurrentLimitA", unit="A", dtype=float)
+    @attribute(name="CurrentLimitA", unit="A", dtype=float)
     def current_limit_a(self):
         return self.read_attribute('current_limit', 1)
 
-    @attribute(label="CurrentLimitB", unit="A", dtype=float)
+    @attribute(name="CurrentLimitB", unit="A", dtype=float)
     def current_limit_b(self):
         return self.read_attribute('current_limit', 2)
 
