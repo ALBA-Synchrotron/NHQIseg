@@ -12,7 +12,7 @@ class NHQComm:
     def __init__(self, port, wait_time=0):
         log_name = '{}.NHQComm'.format(__name__)
         self.log = logging.getLogger(log_name)
-        self._com = serial.Serial(port)
+        self._com = serial.serial_for_url(port)
         self._com.timeout = 0
         self._send('w')
         time.sleep(1)
