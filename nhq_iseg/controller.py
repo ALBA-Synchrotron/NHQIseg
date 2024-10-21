@@ -9,12 +9,12 @@ class NHQPowerSupply:
     It is based on serial communication.
     """
 
-    def __init__(self, port, model):
+    def __init__(self, url, model):
         self.model = model
         wait_time = 0
         if Specs.is_high_precision(model):
             wait_time = 200
-        self.com = NHQComm(port, wait_time)
+        self.com = NHQComm(url, wait_time)
         self._channels = {}
         for i in range(1, self.channels+1):
             self._channels[i] = NHQChannel(self, i)

@@ -10,7 +10,7 @@ import logging
 class NHQIseg(Device):
 
     model = device_property(dtype=str, doc='NHQ_xxxx model e.g.: NHQ_202M')
-    port = device_property(dtype=str, doc='Serial port')
+    url = device_property(dtype=str, doc='See serialio documentation')
     auto_start = device_property(dtype=bool, doc='Activate the auto start')
     nhq = None
     library_debug = device_property(dtype=bool, default_value=False)
@@ -18,11 +18,11 @@ class NHQIseg(Device):
     def init_device(self):
         Device.init_device(self)
         self.info_stream('Connecting to NHQ model: {} '
-                         'port: {}'.format(self.model, self.port))
+                         'url: {}'.format(self.model, self.url))
         model = Models.from_str(self.model)
         if self.library_debug:
             logging.basicConfig(level=logging.DEBUG)
-        self.nhq = NHQPowerSupply(self.port, model)
+        self.nhq = NHQPowerSupply(self.url, model)
         for i in range(1, self.nhq.channels+1):
             ch = {1: 'A', 2: 'B'}[i]
             self.nhq[i].auto_start = self.auto_start
