@@ -1,9 +1,8 @@
 
 from tango import DevState, AttReqType
-from tango.server import Device, attribute, command
-from tango.server import device_property
-from .constant import Models, State
-from .controller import NHQPowerSupply
+from tango.server import Device, attribute, device_property, command
+from ..constant import Models, State
+from ..controller import NHQPowerSupply
 import logging
 
 
@@ -71,41 +70,31 @@ class NHQIseg(Device):
         else:
             return self.get_state() != DevState.FAULT
 
-    @attribute(name="CurrentA", unit="A", dtype=float)
+    @attribute(name="currentA", unit="A", dtype=float)
     def current_a(self):
         return self.read_attribute('current', 1)
 
-    @attribute(name="CurrentB", unit="A", dtype=float)
+    @attribute(name="currentB", unit="A", dtype=float)
     def current_b(self):
         return self.read_attribute('current', 2)
 
-    @attribute(name="VoltageA", unit="V", dtype=float)
+    @attribute(name="voltageA", unit="V", dtype=float)
     def voltage_a(self):
         return self.read_attribute('voltage', 1)
 
-    @attribute(name="VoltageB", unit="V", dtype=float)
+    @voltage_a.write
+    def voltage_a(self, value):
+        return self.write_attribute('set_voltage', 1, value)
+
+    @attribute(name="voltageB", unit="V", dtype=float)
     def voltage_b(self):
         return self.read_attribute('voltage', 2)
 
-    @attribute(name="SetVoltageA", unit="V", dtype=float,
-               fisallowed='is_write_allow')
-    def set_voltage_a(self):
-        return self.read_attribute('set_voltage', 1)
-
-    @set_voltage_a.write
-    def set_voltage_a(self, value):
-        return self.write_attribute('set_voltage', 1, value)
-
-    @attribute(name="SetVoltageB", unit="V", dtype=float,
-               fisallowed='is_write_allow')
-    def set_voltage_b(self):
-        return self.read_attribute('set_voltage', 2)
-
-    @set_voltage_b.write
-    def set_voltage_b(self, value):
+    @voltage_b.write
+    def voltage_b(self, value):
         return self.write_attribute('set_voltage', 2, value)
 
-    @attribute(name="RampSpeedA", unit="V/s", dtype=int, min_value=2,
+    @attribute(name="rampSpeedA", unit="V/s", dtype=int, min_value=2,
                max_value=255, fisallowed='is_write_allow')
     def ramp_speed_a(self):
         return self.read_attribute('ramp_speed', 1)
@@ -114,7 +103,7 @@ class NHQIseg(Device):
     def ramp_speed_a(self, value):
         return self.write_attribute('ramp_speed', 1, value)
 
-    @attribute(name="RampSpeedB", unit="V/s", dtype=int, min_value=2,
+    @attribute(name="rampSpeedB", unit="V/s", dtype=int, min_value=2,
                max_value=255, fisallowed='is_write_allow')
     def ramp_speed_b(self):
         return self.read_attribute('ramp_speed', 2)
@@ -123,21 +112,26 @@ class NHQIseg(Device):
     def ramp_speed_b(self, value):
         return self.write_attribute('ramp_speed', 2, value)
 
-    @attribute(name="VoltageLimitA", unit="V", dtype=float)
+    @attribute(name="maxVoltageA", unit="V", dtype=float)
     def voltage_limit_a(self):
         return self.read_attribute('voltage_limit', 1)
 
-    @attribute(name="VoltageLimitB", unit="V", dtype=float)
+    @attribute(name="maxVoltageB", unit="V", dtype=float)
     def voltage_limit_b(self):
         return self.read_attribute('voltage_limit', 2)
 
-    @attribute(name="CurrentLimitA", unit="A", dtype=float)
+    @attribute(name="maxCurrentA", unit="A", dtype=float)
     def current_limit_a(self):
         return self.read_attribute('current_limit', 1)
 
-    @attribute(name="CurrentLimitB", unit="A", dtype=float)
+    @attribute(name="maxCurrentB", unit="A", dtype=float)
     def current_limit_b(self):
         return self.read_attribute('current_limit', 2)
+
+    @command()
+    def restore_voltage(self):
+        for channel in self.nhq:
+            channel.start()
 
 
 def main():
