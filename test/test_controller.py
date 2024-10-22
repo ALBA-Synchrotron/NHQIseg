@@ -1,5 +1,5 @@
 import pytest
-from nhq_iseg import Models, State
+from nhqiseg import Models, State
 
 
 @pytest.mark.parametrize('nhq_controller', [Models.NHQ_102M, Models.NHQ_202M],

@@ -1,6 +1,6 @@
 import pytest
 import unittest.mock as mock
-import nhq_iseg
+import nhqiseg
 import serialio
 
 from patch_serial import PatchSerial
@@ -20,25 +20,25 @@ def nhq_mock():
 @pytest.fixture
 def nhq_com():
     """Test nhq communication"""
-    with (mock.patch('nhq_iseg.communication.serialio.aio.posix.Serial') as
+    with (mock.patch('nhqiseg.communication.serialio.aio.posix.Serial') as
           mock_serial):
         p = PatchSerial()
         mock_serial.return_value.write = p.write
         mock_serial.return_value.readline = p.readline
 
-        nhq = nhq_iseg.NHQComm('serial:/dev/tty0')
+        nhq = nhqiseg.NHQComm('serial:/dev/tty0')
         yield nhq
 
 
 @pytest.fixture()
 def nhq_controller(request):
     """Test nhq controller"""
-    with (mock.patch('nhq_iseg.communication.serialio.aio.posix.Serial') as
+    with (mock.patch('nhqiseg.communication.serialio.aio.posix.Serial') as
           mock_serial):
         # patch_serial(mock_serial)
         p = PatchSerial()
         mock_serial.return_value.write = p.write
         mock_serial.return_value.readline = p.readline
 
-        nhq = nhq_iseg.NHQPowerSupply('serial:/dev/tty0', request.param)
+        nhq = nhqiseg.NHQPowerSupply('serial:/dev/tty0', request.param)
         yield nhq
