@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nhqiseg"
+dynamic = ["version"]
+authors = [
+    {name = "Roberto J. Homs Puron", email = "rhoms@cells.es"},
+]
+description = "Python NHQ Iseg High Power Supplier extension"
+requires-python = ">=3.8"
+license = {text = "LGPL-3.0-or-later"}
+classifiers = [
+       'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Natural Language :: English',
+        'Operating System :: POSIX',
+        'Operating System :: Microsoft :: Windows',
+        'Programming Language :: Python :: 3.5',
+        'Topic :: Communications',
+        'Topic :: Software Development :: Libraries',
+]
+dependencies = [
+ 'pytango >=9.3.6',
+ 'serialio >=2.4.1'
+]
+
+[project.urls]
+ "Homepage" = "https://github.com/ALBA-Synchrotron/NHQIseg"
+
+
+[project.scripts]
+ NHQIseg = "nhqiseg.tango.server:main"
+
+[tool.setuptools.packages]
+find = {}
+
+
+[tool.setuptools_scm]
+write_to = "nhqiseg/_version.py"
+
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov nhqiseg --verbose"

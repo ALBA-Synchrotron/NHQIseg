@@ -1,47 +1,51 @@
-{% set data = load_setup_py_data(setup_file="../setup.py",
-  from_recipe_dir=True) %}
+{% set pyproject = load_file_data('../pyproject.toml', from_recipe_dir=True) %}
+{% set name = pyproject.get('project').get('name') %}
+{% set license = pyproject.get('project').get('license').get('text') %}
+{% set description = pyproject.get('project').get('description') %}
+{% set url = pyproject.get('project').get('urls').get('Homepage') %}
+{% set entry_points = pyproject.get('project').get('script', []) %}
+{% set requirements = pyproject.get('project').get('dependencies', [])%}
+{% set python_require = 
+  pyproject.get('project').get('requires-python', '>=3.7')%}
+
+# Get package version with setuptools_scm
+{% set version = os.popen('python -c "import setuptools_scm;print(setuptools_scm.get_version())"').read().strip()%}
 
 package:
-  name: {{ data.get('name') }}
-  version: {{ data.get('version') }}
+  name: {{ name }}
+  version: {{ version }}
 
 source:
+  # Relative path to the parent directory of the recipe.
   path: ..
 
 build:
-  number: 0
   noarch: python
-  script: "{{PYTHON}} -m pip install . -vv"
-  entry_points:
-    - NHQIseg = nhq_iseg.tango:main
+  entry_points: {{ entry_points }}
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python {{data['python_requires']}}
-    - setuptools
+    - pip
+    - python {{ python_require }}
+    - setuptools-scm
   run:
-    - python {{data['python_requires']}}
-    # Extras requirements does not work fine
-    - pytango
-    {% for dep in data['install_requires'] %}
-    - {{ dep.lower()}}
+    - python {{ python_require }}
+    {% for dep in requirements %}
+    - {{ dep.lower() }}
     {% endfor %}
-
 test:
   imports:
-    - {{data.get('name')}}
-
+    - {{ name }}
   requires:
-    {% for dep in data['tests_require'] %}
-    - {{ dep.lower()}}
-    {% endfor %}
+    - pip
+  commands:
+    - pip check
 
 about:
-  home: {{ data.get('url')}}
-  license: {{ data.get('license')}}
-  summary: {{ data.get('description')}}
-  author: {{ data.get('author')}}
-  description: {{ data.get('long_description')}}
+  home: {{ url }}
+  license: {{ license }}
+  summary: {{ description }}
 
 
 
