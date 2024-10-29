@@ -15,11 +15,10 @@ classifiers = [
        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'License :: OSI Approved :: GNU LESSER GENERAL PUBLIC LICENSE v3',
         'Natural Language :: English',
         'Operating System :: POSIX',
-        'Operating System :: Microsoft :: Windows',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Communications',
         'Topic :: Software Development :: Libraries',
 ]
