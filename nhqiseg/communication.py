@@ -16,9 +16,9 @@ class NHQComm:
         self._send('w')
         time.sleep(1)
         raw_value = self._read()
-        if raw_value.count('\n') != 2:
+        if raw_value.count('\r') != 2:
             raise RuntimeError('break time must be between 1 and 80 ms')
-        value = int(raw_value.split('\r\n')[1])
+        value = int(raw_value.split('\r')[1])
         if value == 0 or value > 30:
             raise RuntimeError('break time must be between 1 and 20 ms')
         self._wait_time = ((value * self.MAX_LEN) + 100 + wait_time) / 1000

@@ -38,10 +38,11 @@ class NHQChannel:
         # The HW can answer in two ways:
         #   1) D1=40\r\n\r\n
         #   2) D1\r\n40\r\n
+        # SerialIO library remove the EOL='\n'
         if '=' in ans:
             raw_value = ans.strip().split('=')[1]
         else:
-            raw_value = ans.split('\r\n')[1]
+            raw_value = ans.split('\r')[1]
         return raw_value
 
     def write_int(self, cmd, value):
